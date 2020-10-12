@@ -1,13 +1,15 @@
 from pattern import *
 
 username = 0
-balance = 100000
-transfer = 13000
+balance = 83200
+transfer = 12345
 
 
 def setup():
     size(500, 300)
     background('#2b2b2b')
+    font = loadFont("TwCenMT40.vlw")
+    textFont(font)
     
 
 def polygon(n, x, y, r):
@@ -40,6 +42,10 @@ def draw():
         stroke('#ff9717')
         line(x, 10, x-100, 10)
         line(x, 290, x-100, 290)
+        stroke(0x55ff9717)
+        line(0, 10, width, 10)
+        line(0, 290, width, 290)
+        
         if x > 550 :
             x = 0
         
@@ -52,7 +58,7 @@ def draw():
         
         #charge balance
         pushMatrix()
-        translate(150, height/2)
+        translate(150, 130)
         rotate(-PI/2)
         noStroke()
         fill('#2b2b2b')
@@ -78,6 +84,11 @@ def draw():
         polygon(10, 0, 0, 20)
         popMatrix()
         
+        fill(230)
+        textAlign(CENTER, CENTER)
+        textSize(30)
+        text(str(balance) + "mAh", 150, 250)
+    
     
         #buttons
         fill('#ffaf4d')
@@ -90,38 +101,38 @@ def draw():
         strokeWeight(2)
         polygon(6, 320, 125, 50)
         polygon(6, 400, 175, 50)
+        
         fill('#2b2b2b')
-        textAlign(CENTER, CENTER)
-        textSize(20)
+        textSize(30)
         text('PAY', 320, 125)
-        textSize(15)
+        textSize(20)
         text('TRANSFER', 400, 175)
+        
         
     elif pay == True:
         renderPolygon()
         strokeWeight(0)
-        stroke('#FFFFFF')
-        rect(10, 10, 50, 30)
+        stroke(150)
+        #rect(10, 10, 50, 30)
+        strokeWeight(5)
+        line(25, 25, 45, 15)
+        line(25, 25, 45, 35)
         noLoop()
 
     
 def mousePressed():
     global balance, transfer, pay
-    
-    
-    
+
     disX1 = 320 - mouseX
     disY1 = 125 - mouseY
     if sqrt(sq(disX1) + sq(disY1)) < 40 and pay == False:
         pay = True
 
-        
     disX2 = 400 - mouseX
     disY2 = 175 - mouseY
     if sqrt(sq(disX2) + sq(disY2)) < 40 and pay == False:
         balance = balance - transfer
         print(balance)
-       
 
     if mouseX>10 and mouseX<60 and mouseY>10 and mouseY<40 and pay == True:
         global pay, x
