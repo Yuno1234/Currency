@@ -1,6 +1,8 @@
+from pattern import *
+
 username = 0
 balance = 100000
-transfer = 10000
+transfer = 13000
 
 
 def setup():
@@ -71,6 +73,10 @@ def draw():
     polygon(10, 0, 0, 20)
     popMatrix()
     
+    
+    renderPolygon()
+    
+
     #buttons
     fill('#ffaf4d')
     stroke('#2b2b2b')
@@ -82,6 +88,7 @@ def draw():
     strokeWeight(2)
     polygon(6, 320, 125, 50)
     polygon(6, 400, 175, 50)
+
     
 def mousePressed():
     global balance, transfer

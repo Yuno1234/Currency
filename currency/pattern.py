@@ -1,7 +1,3 @@
-def setup():
-    size(500, 300)
-    background('#2b2b2b')
-
 def polygon(n, x, y, r):
     angle = 360.0 / n
     beginShape()
@@ -9,7 +5,7 @@ def polygon(n, x, y, r):
         vertex(x + r * cos(radians(angle * i)), y + r * sin(radians(angle * i)))
     endShape(CLOSE)
 
-def draw():
+def renderPolygon():
     translate(width/2, height/2)
     strokeWeight(8)
     stroke('#2b2b2b')
@@ -27,5 +23,3 @@ def draw():
         stroke(c, c, c)
         polygon(6, 0, 0, 12*i)
         popMatrix()
-    
-    noLoop()
