@@ -6,6 +6,9 @@ def polygon(n, x, y, r):
     endShape(CLOSE)
 
 def renderPolygon():
+    pushMatrix()
+    fill('#2b2b2b')
+    rect(0, 0, width, height)
     translate(width/2, height/2)
     strokeWeight(8)
     stroke('#2b2b2b')
@@ -23,3 +26,4 @@ def renderPolygon():
         stroke(c, c, c)
         polygon(6, 0, 0, 12*i)
         popMatrix()
+    popMatrix()

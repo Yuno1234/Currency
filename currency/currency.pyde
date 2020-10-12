@@ -19,79 +19,117 @@ def polygon(n, x, y, r):
 
 x = 0
 bal = balance
+pay = False
+
 
 def draw():
-    global x, balance, bal
+    global x, balance, bal, select
     
-    x += 10
-    if bal < 0:
-        balance = 0
-        bal = 0
-    elif balance < bal:
-        bal -= 200
+    if pay == False:
+        x += 10
+        if bal < 0:
+            balance = 0
+            bal = 0
+        elif balance < bal:
+            bal -= 200
+        
+        
+        #line effect
+        fill(0x662b2b2b)
+        rect(0, 0, width, height)
+        stroke('#ff9717')
+        line(x, 10, x-100, 10)
+        line(x, 290, x-100, 290)
+        if x > 550 :
+            x = 0
+        
+        thetaL = TAU/100000 * bal
+        if bal > 99999:
+            thetaS = TAU
+            thetaL = TAU
+        elif bal < 100000:
+                thetaS = TAU/10000 * (bal%10000)
+        
+        #charge balance
+        pushMatrix()
+        translate(150, height/2)
+        rotate(-PI/2)
+        noStroke()
+        fill('#2b2b2b')
+        arc(0, 0, 194, 194, 0, 2*PI, PIE)
+        fill('#ffaf4d')
+        arc(0, 0, 194, 194, 0, thetaL, PIE)
+        fill('#2b2b2b')
+        arc(0, 0, 114, 114, 0, 2*PI, PIE)
+        fill('#ffaf4d')
+        arc(0, 0, 114, 114, 0, thetaS, PIE)
+        noFill()
+        stroke('#2b2b2b')
+        strokeWeight(8)
+        polygon(10, 0, 0, 100)
+        polygon(10, 0, 0, 60)
+        fill('#2b2b2b')
+        polygon(10, 0, 0, 20)
+        stroke('#FFFFFF')
+        strokeWeight(2)
+        noFill()
+        polygon(10, 0, 0, 100)
+        polygon(10, 0, 0, 60)
+        polygon(10, 0, 0, 20)
+        popMatrix()
+        
     
-    #line effect
-    fill(0x032b2b2b)
-    rect(0, 0, width, height)
-    stroke('#ff9717')
-    line(x, 10, x-100, 10)
-    line(x, 290, x-100, 290)
-    if x > 550:
-        x = 0
-    
-    thetaL = TAU/100000 * bal
-    if bal == 100000:
-        thetaS = TAU
-    elif bal < 100000:
-            thetaS = TAU/10000 * (bal%10000)
-    
-    #charge balance
-    pushMatrix()
-    translate(150, height/2)
-    rotate(-PI/2)
-    noStroke()
-    fill('#2b2b2b')
-    arc(0, 0, 194, 194, 0, 2*PI, PIE)
-    fill('#ffaf4d')
-    arc(0, 0, 194, 194, 0, thetaL, PIE)
-    fill('#2b2b2b')
-    arc(0, 0, 114, 114, 0, 2*PI, PIE)
-    fill('#ffaf4d')
-    arc(0, 0, 114, 114, 0, thetaS, PIE)
-    noFill()
-    stroke('#2b2b2b')
-    strokeWeight(8)
-    polygon(10, 0, 0, 100)
-    polygon(10, 0, 0, 60)
-    fill('#2b2b2b')
-    polygon(10, 0, 0, 20)
-    stroke('#FFFFFF')
-    strokeWeight(2)
-    noFill()
-    polygon(10, 0, 0, 100)
-    polygon(10, 0, 0, 60)
-    polygon(10, 0, 0, 20)
-    popMatrix()
-    
-    
-    renderPolygon()
-    
-
-    #buttons
-    fill('#ffaf4d')
-    stroke('#2b2b2b')
-    strokeWeight(8)
-    polygon(6, 320, 125, 50)
-    polygon(6, 400, 175, 50)
-    noFill()
-    stroke('#FFFFFF')
-    strokeWeight(2)
-    polygon(6, 320, 125, 50)
-    polygon(6, 400, 175, 50)
+        #buttons
+        fill('#ffaf4d')
+        stroke('#2b2b2b')
+        strokeWeight(8)
+        polygon(6, 320, 125, 50)
+        polygon(6, 400, 175, 50)
+        noFill()
+        stroke('#FFFFFF')
+        strokeWeight(2)
+        polygon(6, 320, 125, 50)
+        polygon(6, 400, 175, 50)
+        fill('#2b2b2b')
+        textAlign(CENTER, CENTER)
+        textSize(20)
+        text('PAY', 320, 125)
+        textSize(15)
+        text('TRANSFER', 400, 175)
+        
+    elif pay == True:
+        renderPolygon()
+        strokeWeight(0)
+        stroke('#FFFFFF')
+        rect(10, 10, 50, 30)
+        noLoop()
 
     
 def mousePressed():
-    global balance, transfer
-    balance = balance - transfer
-    print(balance)
+    global balance, transfer, pay
+    
+    
+    
+    disX1 = 320 - mouseX
+    disY1 = 125 - mouseY
+    if sqrt(sq(disX1) + sq(disY1)) < 40 and pay == False:
+        pay = True
+
+        
+    disX2 = 400 - mouseX
+    disY2 = 175 - mouseY
+    if sqrt(sq(disX2) + sq(disY2)) < 40 and pay == False:
+        balance = balance - transfer
+        print(balance)
+       
+
+    if mouseX>10 and mouseX<60 and mouseY>10 and mouseY<40 and pay == True:
+        global pay, x
+        pay = False
+        loop()
+        x = 0
+        
+        
+        
+
     
